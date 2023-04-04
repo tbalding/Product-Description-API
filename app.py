@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 from flask import Flask
 import requests
 import openai
@@ -7,9 +8,10 @@ import openai
 app = Flask(__name__)
 
 # save keys to .env file
+load_dotenv()
 openai.api_key = os.getenv("OPEN_AI_KEY")
 SQSP_key = os.getenv("SQSP_KEY")
-headers = {'Authorization': SQSP_key, 'user-agent': 'Product_Description_Generator', 'Content-Type': 'application/json'}
+headers = {'Authorization': SQSP_key, 'User-Agent': 'Product_Description_Generator', 'Content-Type': 'application/json'}
 
 
 def pid(x):
@@ -20,7 +22,7 @@ def pid(x):
 
 
 def all_prod():
-    url = 'https://api.squarespace.com/1.0/commerce/products'
+    url = 'https://api.squarespace.com/1.0/commerce/products/'
     r = requests.get(url, headers=headers)
     return r.text
 
