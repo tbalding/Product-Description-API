@@ -1,0 +1,33 @@
+<!--  how to use css in python_ flask-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--  Load CSS in Flask with html-->
+    <link rel="stylesheet" href='/static_files/main.css' />
+ 
+  </head>
+  <body>
+    <h1>Welcome to the Product Description Generator</h1>
+    <p>The Product Description Generator utilizes Squarespace’s Products API and OpenAI’s API to automatically generate and publish product descriptions. 
+        The more details added to the product, such as title, images, and dimensions, the more accurate the description output. </p>
+    <h2>Setup</h2>
+    <p>To begin using, generate authorization tokens through the Developer API Keys panel of the designated Squarespace site, ensuring that product permissions are set to read and write: </p>
+    <a href = "https://support.squarespace.com/hc/en-us/articles/236297987-Squarespace-API-keys#toc-api-key-security"></a>
+    <p>As well as through your OpenAI account: </p>
+    <a href="https://platform.openai.com/account/api-keys"></a>
+    <p>These tokens will then be added to your directory’s .env file as <tt>OPEN_AI_KEY</tt> and <tt>SQSP_KEY</tt>.</p>
+    <p>The app.py file can then be launched from a code editor, such as <a href="https://www.jetbrains.com/pycharm/download/#section=mac">Pycharm</a>. To interact with the API, I recommend using the <a href="https://learning.postman.com/docs/getting-started/installation-and-updates/#installing-the-postman-desktop-agent">Postman Desktop Agent</a>.</p>
+    <h2>Using the API</h2>
+    <p>Replace <tt>product_id</tt> with the desired Product ID.</p>
+    <b>Retrieve info for all products:</b>
+    <p style="text-indent: 25px;"><tt>GET http://localhost:5002/all</tt></p>
+    <b>Retrieve info for a single product:</b>
+    <p style="text-indent: 25px;"><tt>GET http://localhost:5002/single/product_id</tt></p>
+    <b>Generate a description without updating the product:</b>
+    <p style="text-indent: 25px;"><tt>POST http://localhost:5002/describe/product_id</tt></p>
+    <b>Generate a description and update the product:</b>
+    <p style="text-indent: 25px;"><tt>PUT http://localhost:5002/update/product_id</tt></p>
+    <b>Delete the product description:</b>
+    <p style="text-indent: 25px;"><tt>DELETE http://localhost:5002/delete/product_id</tt></p>
+</body>
+</html>

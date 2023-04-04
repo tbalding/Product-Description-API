@@ -1,11 +1,11 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask
+from flask import Flask, render_template
 import requests
 import openai
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='template_files', static_folder='static_files')
 
 # save keys to .env file
 load_dotenv()
@@ -67,7 +67,7 @@ def describe(product_id: str):
 
 
 # generate and update product description
-@app.route('/update/<string:product_id>', methods=['POST'])
+@app.route('/update/<string:product_id>', methods=['PUT'])
 def update(product_id: str):
     obj = pid(product_id)
     product_description = generate_product_description(obj)
@@ -77,5 +77,19 @@ def update(product_id: str):
     return r.text
 
 
+# delete existing product description
+@app.route('/delete/<string:product_id>', methods=['DELETE'])
+def delete(product_id: str):
+    data = {"description": ""}
+    url = 'https://api.squarespace.com/1.0/commerce/products/' + product_id
+    r = requests.post(url, headers=headers, json=data)
+    return r.text
+
+
+@app.route('/')
+def welcome():
+    return render_template('index.html')
+
+
 if __name__ == '__main__':
-    app.run(port=5002)
+    app.run(port=5002, debug=True)
